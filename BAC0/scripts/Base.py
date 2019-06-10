@@ -83,6 +83,8 @@ class Base:
         self._started = False
         self._stopped = False
 
+        self._log.info(f'IP: {localIPAddr} / Type: {type(localIPAddr)}')
+
         if localIPAddr in Base._used_ips:
             raise InitializationError(
                 "IP Address provided ({}) already used.".format(localIPAddr)
@@ -181,7 +183,7 @@ class Base:
                 self._log.warning("Error opening socket: {}".format(error))
                 raise InitializationError("Error opening socket: {}".format(error))
             self._log.debug("Running")
-        except OSError:
+        except OSError as error:
             self._log.error("an error has occurred: {}".format(error))
             raise InitializationError("Error starting app: {}".format(error))
         finally:
