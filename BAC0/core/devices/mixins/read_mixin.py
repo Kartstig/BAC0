@@ -5,7 +5,7 @@
 # Licensed under LGPLv3, see file LICENSE in this source tree.
 #
 """
-read_mixin.py - Add ReadProperty and ReadPropertyMultiple to a device 
+read_mixin.py - Add ReadProperty and ReadPropertyMultiple to a device
 """
 # --- standard Python modules ---
 
@@ -45,7 +45,7 @@ class ReadPropertyMultiple:
 
     def _batches(self, request, points_per_request):
         """
-        Generator for creating 'request batches'.  Each batch contains a maximum of "points_per_request" 
+        Generator for creating 'request batches'.  Each batch contains a maximum of "points_per_request"
         points to read.
         :params: request a list of point_name as a list
         :params: (int) points_per_request

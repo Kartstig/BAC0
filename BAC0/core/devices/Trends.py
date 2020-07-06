@@ -113,19 +113,18 @@ class TrendLog(TrendLogProperties):
             year, month, day, dow = each.timestamp.date
             year = year + 1900
             hours, minutes, seconds, ms = each.timestamp.time
-            index.append(
-                pd.to_datetime(
-                    "{}-{}-{} {}:{}:{}.{}".format(
-                        year, month, day, hours, minutes, seconds, ms
-                    ),
-                    format="%Y-%m-%d %H:%M:%S.%f",
-                )
+            idx = "{}-{}-{} {}:{}:{}.{}".format(
+                year, month, day, hours, minutes, seconds, ms
             )
+            index.append(idx)
             logdatum.append(each.logDatum.dict_contents())
             status.append(each.statusFlags)
 
         if _PANDAS:
             df = pd.DataFrame({"index": index, "logdatum": logdatum, "status": status})
+            df["index"] = df["index"].apply(
+                lambda x: pd.datetime(x, format="%Y-%m-%d %H:%M:%S.%f")
+            )
             df = df.set_index("index")
             df["choice"] = df["logdatum"].apply(lambda x: list(x.keys())[0])
             df[self.properties.object_name] = df["logdatum"].apply(
